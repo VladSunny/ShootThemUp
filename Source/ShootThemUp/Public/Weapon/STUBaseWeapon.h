@@ -14,13 +14,14 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ASTUBaseWeapon();
+
+	virtual void Fire();
 
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USkeletalMeshComponent* WeaponMesh;
-	// Called when the game starts or when spawned
+	
 	virtual void BeginPlay() override;
 
 };

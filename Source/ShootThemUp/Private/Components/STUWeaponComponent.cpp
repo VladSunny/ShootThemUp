@@ -1,34 +1,35 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Components/STUWeaponComponent.h"
+#include "Weapon/STUBaseWeapon.h"
+#include "GameFramework/Character.h"
 
-// Sets default values for this component's properties
 USTUWeaponComponent::USTUWeaponComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
+    PrimaryComponentTick.bCanEverTick = false;
 }
 
+void USTUWeaponComponent::Fire() {
+    if (!CurrentWeapon) return;
+    CurrentWeapon->Fire();
+}
 
-// Called when the game starts
 void USTUWeaponComponent::BeginPlay()
 {
-	Super::BeginPlay();
-
-	// ...
-	
+    Super::BeginPlay();
+    SpawnWeapon();
 }
 
-
-// Called every frame
-void USTUWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void USTUWeaponComponent::SpawnWeapon()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+    if (!GetWorld()) return;
 
-	// ...
+    ACharacter* Character = Cast<ACharacter>(GetOwner());
+    if (!Character) return;
+     
+    CurrentWeapon = GetWorld()->SpawnActor<ASTUBaseWeapon>(WeaponClass);
+    if (!CurrentWeapon) return;
+
+    FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
+    CurrentWeapon->AttachToComponent(Character->GetMesh(), AttachmentRules, WeaponAttachPointName);
 }
-

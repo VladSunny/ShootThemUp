@@ -3,6 +3,8 @@
 #include "Weapon/STUBaseWeapon.h"
 #include "Components/SkeletalMeshComponent.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogBaseCharacter, All, All);
+
 ASTUBaseWeapon::ASTUBaseWeapon()
 {
 
@@ -17,5 +19,9 @@ void ASTUBaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ASTUBaseWeapon::Fire(){
+    UE_LOG(LogBaseCharacter, Display, TEXT("Fire!"));
 }
 
