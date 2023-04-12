@@ -11,24 +11,29 @@ class USkeletalMeshComponent;
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
 {
-	GENERATED_BODY()
-	
-public:	
-	ASTUBaseWeapon();
+    GENERATED_BODY()
 
-	virtual void Fire();
+public:
+    ASTUBaseWeapon();
+
+    virtual void Fire();
 
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USkeletalMeshComponent* WeaponMesh;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     FName MuzzleSocketName = "MuzzleSocket";
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     float TraceMaxDistance = 30000.0f;
 
-	virtual void BeginPlay() override;
+    virtual void BeginPlay() override;
 
-	void MakeShot();
+    void MakeShot();
+    APlayerController* GetPlayerController() const;
+    bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotator) const;
+    FVector GetMuzzleWorldLocation() const;
+    bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
+    void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
 };
