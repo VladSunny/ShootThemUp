@@ -7,6 +7,7 @@
 #include "Components/STUCharacterMovementComponent.h"
 #include "Components/STUHealthComponent.h"
 #include "Components/TextRenderComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/Controller.h"
 #include "Components/STUWeaponComponent.h"
 
@@ -147,4 +148,5 @@ void ASTUBaseCharacter::OnDeath()
     if (!Controller) return;
     Controller->ChangeState(NAME_Spectating);
     
+    GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 }
