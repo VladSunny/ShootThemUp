@@ -19,6 +19,7 @@ void ASTURifleWeapon::StopFire()
 void ASTURifleWeapon::MakeShot()
 {
     if (!GetWorld()) return;
+
     FVector TraceStart, TraceEnd;
     if (!GetTraceData(TraceStart, TraceEnd)) return;
 
