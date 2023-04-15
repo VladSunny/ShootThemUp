@@ -20,22 +20,22 @@ public:
     void SetShootDirection(const FVector Direction) { ShootDirection = Direction; }
 
 protected:
-    UPROPERTY(VisibleAnywhere, Category = "Weapon")
+    UPROPERTY(VisibleDefaultsOnly, Category = "Weapon")
     USphereComponent* CollisionComponent;
 
-    UPROPERTY(VisibleAnywhere, Category = "Weapon")
+    UPROPERTY(VisibleDefaultsOnly, Category = "Weapon")
     UProjectileMovementComponent* MovementComponent;
 
-    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    UPROPERTY(VisibleDefaultsOnly, Category = "Weapon")
     float DamageRadius = 200.0f;
 
-    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    UPROPERTY(VisibleDefaultsOnly, Category = "Weapon")
     float DamageAmount = 50.0f;
 
-    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    UPROPERTY(VisibleDefaultsOnly, Category = "Weapon")
     bool DoFullDamage = false;
 
-    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    UPROPERTY(VisibleDefaultsOnly, Category = "Weapon")
     float LifeSeconds = 5.0f;
 
     virtual void BeginPlay() override;
