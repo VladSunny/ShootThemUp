@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Weapon/STULauncherWeapon.h"
 #include "Weapon/STUProjectile.h"
 
@@ -9,11 +8,20 @@ void ASTULauncherWeapon::StartFire()
     MakeShot();
 }
 
-void ASTULauncherWeapon::MakeShot() {
-    if (!GetWorld()) return;
+void ASTULauncherWeapon::MakeShot()
+{
+    if (!GetWorld() || IsAmmoEmpty())
+    {
+        StopFire();
+        return;
+    }
 
     FVector TraceStart, TraceEnd;
-    if (!GetTraceData(TraceStart, TraceEnd)) return;
+    if (!GetTraceData(TraceStart, TraceEnd))
+    {
+        StopFire();
+        return;
+    }
 
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
@@ -27,4 +35,6 @@ void ASTULauncherWeapon::MakeShot() {
     Projectile->SetShootDirection(Direction);
     Projectile->SetOwner(GetOwner());
     Projectile->FinishSpawning(SpawnTransform);
+
+    DecreaseAmmo();
 }
