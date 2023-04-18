@@ -75,12 +75,20 @@ void ASTUBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, c
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
 }
 
-void ASTUBaseWeapon::DecreaseAmmo() {
+void ASTUBaseWeapon::DecreaseAmmo()
+{
+    if (CurrentAmmo.Bullets == 0)
+    {
+        UE_LOG(LogBaseWeapon, Display, TEXT("Clip is empty"));
+        return;
+    }
     CurrentAmmo.Bullets--;
     LogAmmo();
 
-    if (IsClipEmpty() && !IsAmmoEmpty()){
-        ChangeClip();
+    if (IsClipEmpty() && !IsAmmoEmpty())
+    {
+        StopFire();
+        OnClipEmpty.Broadcast();
     }
 }
 
@@ -94,15 +102,27 @@ bool ASTUBaseWeapon::IsClipEmpty() const
     return CurrentAmmo.Bullets == 0;
 }
 
-void ASTUBaseWeapon::ChangeClip() {
-    CurrentAmmo.Bullets = DefaultAmmo.Bullets;
-    if (!CurrentAmmo.Infinite){
+void ASTUBaseWeapon::ChangeClip()
+{
+    if (!CurrentAmmo.Infinite)
+    {
+        if (CurrentAmmo.Clips == 0){
+            UE_LOG(LogBaseWeapon, Display, TEXT("No more clips"));
+            return;
+        }
         CurrentAmmo.Clips--;
     }
+    CurrentAmmo.Bullets = DefaultAmmo.Bullets;
     UE_LOG(LogBaseWeapon, Display, TEXT("______________ CHANGE CLIP ________________"));
 }
 
-void ASTUBaseWeapon::LogAmmo() {
+bool ASTUBaseWeapon::CanReload() const
+{
+    return CurrentAmmo.Bullets < DefaultAmmo.Bullets && CurrentAmmo.Clips > 0;
+}
+
+void ASTUBaseWeapon::LogAmmo()
+{
     FString AmmoInfo = "Ammo: " + FString::FromInt(CurrentAmmo.Bullets) + "/";
     AmmoInfo += CurrentAmmo.Infinite ? "Infinite" : FString::FromInt(CurrentAmmo.Clips);
     UE_LOG(LogBaseWeapon, Display, TEXT("%s"), *AmmoInfo);
