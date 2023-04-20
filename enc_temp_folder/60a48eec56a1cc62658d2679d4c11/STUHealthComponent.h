@@ -22,7 +22,7 @@ public:
     bool IsDead() const { return FMath::IsNearlyZero(Health); }
     
     UFUNCTION(BlueprintCallable, Category = "Health")
-    float GetHealthPrecent() const { return Health / MaxHealth; }
+    float GetHealthPrecent() const { return Health / MaxHealth;  }
 
 
     float GetHealth() const { return Health; }
