@@ -40,7 +40,7 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     FAmmoData DefaultAmmo{15, 10, false};
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     FWeaponUIData UIData;
 
     virtual void BeginPlay() override;
