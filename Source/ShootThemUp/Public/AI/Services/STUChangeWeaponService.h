@@ -6,9 +6,6 @@
 #include "BehaviorTree/BTService.h"
 #include "STUChangeWeaponService.generated.h"
 
-/**
- *
- */
 UCLASS()
 class SHOOTTHEMUP_API USTUChangeWeaponService : public UBTService
 {

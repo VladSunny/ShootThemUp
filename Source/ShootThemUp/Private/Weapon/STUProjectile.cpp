@@ -6,6 +6,7 @@
 #include "DrawDebugHelpers.h"
 #include "Kismet/GamePlayStatics.h"
 #include "Weapon/Components/STUWeaponFXComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
 
 ASTUProjectile::ASTUProjectile()
 {
@@ -36,6 +37,7 @@ void ASTUProjectile::BeginPlay()
     MovementComponent->Velocity = ShootDirection * MovementComponent->InitialSpeed;
     CollisionComponent->IgnoreActorWhenMoving(GetOwner(), true);
     CollisionComponent->OnComponentHit.AddDynamic(this, &ASTUProjectile::OnProjectileHit);
+
     SetLifeSpan(LifeSeconds);
 }
 
