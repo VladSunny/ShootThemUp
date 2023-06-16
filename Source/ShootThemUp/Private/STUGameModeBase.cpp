@@ -57,7 +57,7 @@ void ASTUGameModeBase::StartRound()
 void ASTUGameModeBase::GameTimerUpdate()
 {
     UE_LOG(LogSTUGameModeBase, Display, TEXT("Time: %i / Round: %i/%i"), RoundCountDown, CurrentRound, GameData.RoundsNum);
-    
+
     if (--RoundCountDown <= 0)
     {
         GetWorldTimerManager().ClearTimer(GameRoundTimerHandle);
@@ -65,6 +65,7 @@ void ASTUGameModeBase::GameTimerUpdate()
         if (CurrentRound + 1 <= GameData.RoundsNum)
         {
             ++CurrentRound;
+            ResetPlayers();
             StartRound();
         }
         else
@@ -72,4 +73,21 @@ void ASTUGameModeBase::GameTimerUpdate()
             UE_LOG(LogSTUGameModeBase, Display, TEXT("============== Game Over =============="))
         }
     }
+}
+
+void ASTUGameModeBase::ResetPlayers()
+{
+    if (!GetWorld()) return;
+
+    for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
+    {
+        ResetOnePlayer(It->Get());
+    }
+}
+
+void ASTUGameModeBase::ResetOnePlayer(AController* Controller) {
+    if (Controller && Controller->GetPawn()){
+        Controller->GetPawn()->Reset();
+    }
+    RestartPlayer(Controller);
 }
