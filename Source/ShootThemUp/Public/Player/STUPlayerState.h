@@ -20,7 +20,15 @@ public:
     void SetTeamColor(FLinearColor Color) { TeamColor = Color; }
     FLinearColor GetTeamColor() { return TeamColor; }
 
+    void AddKill() { ++KillsNum; }
+    void AddDeath() { ++DeathsNum; }
+
+    void LogInfo();
+
 private:
     int32 TeamID;
     FLinearColor TeamColor;
+
+    int32 KillsNum = 0;
+    int32 DeathsNum = 0;
 };
