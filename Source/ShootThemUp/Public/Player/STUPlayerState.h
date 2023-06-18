@@ -25,6 +25,8 @@ public:
 
     void LogInfo();
 
+    int32 GetKillsNum() const { return KillsNum; }
+
 private:
     int32 TeamID;
     FLinearColor TeamColor;
