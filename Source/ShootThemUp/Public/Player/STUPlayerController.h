@@ -8,9 +8,6 @@
 
 class USTURespawnComponent;
 
-/**
- *
- */
 UCLASS()
 class SHOOTTHEMUP_API ASTUPlayerController : public APlayerController
 {
@@ -22,4 +19,6 @@ public:
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USTURespawnComponent* STURespawnComponent;
+
+    virtual void OnPossess(APawn* InPawn) override;
 };
