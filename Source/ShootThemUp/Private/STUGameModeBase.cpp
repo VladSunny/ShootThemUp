@@ -65,6 +65,7 @@ void ASTUGameModeBase::RespawnRequest(AController* Controller)
     ResetOnePlayer(Controller);
 }
 
+
 void ASTUGameModeBase::SpawnBots()
 {
     if (!GetWorld()) return;
@@ -220,4 +221,24 @@ void ASTUGameModeBase::SetMatchState(ESTUMatchState State){
     MatchState = State;
     OnMatchStateChanged.Broadcast(MatchState);
 
+}
+
+bool ASTUGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate)
+{
+    const auto PauseSet = Super::SetPause(PC, CanUnpauseDelegate);
+
+    if (PauseSet)
+    {
+        SetMatchState(ESTUMatchState::Pause);
+    }
+
+    return PauseSet;
+}
+
+bool ASTUGameModeBase::ClearPause() {
+    const auto PauseCleared = Super::ClearPause();
+    if (PauseCleared){
+        SetMatchState(ESTUMatchState::InProgress);
+    }
+    return PauseCleared;
 }
