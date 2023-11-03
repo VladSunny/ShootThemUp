@@ -26,6 +26,7 @@ public:
     void LogInfo();
 
     int32 GetKillsNum() const { return KillsNum; }
+    int32 GetDeathsNum() const { return DeathsNum; }
 
 private:
     int32 TeamID;
