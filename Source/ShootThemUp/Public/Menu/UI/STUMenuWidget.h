@@ -19,8 +19,12 @@ protected:
 
     UPROPERTY(meta=(BindWidget))
     UButton* QuitGameButton;
+
+    UPROPERTY(Transient, meta = (BindWidgetAnim))
+    UWidgetAnimation* HideAnimation;
     
     virtual void NativeOnInitialized() override;
+    virtual void OnAnimationFinished_Implementation(const UWidgetAnimation* Animation) override;
 
 private:
     UFUNCTION()

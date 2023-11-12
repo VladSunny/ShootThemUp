@@ -23,9 +23,12 @@ void USTUMenuWidget::NativeOnInitialized()
     }
 }
 
-void USTUMenuWidget::OnStartGame()
+void USTUMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation)
 {
+    //Super::OnAnimationFinished_Implementation(Animation);
 
+    if (Animation != HideAnimation) return;
+    
     if (!GetWorld()) return;
 
     const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
@@ -38,6 +41,11 @@ void USTUMenuWidget::OnStartGame()
     }
     
     UGameplayStatics::OpenLevel(this, STUGameInstance->GetStartupLevelName());
+}
+
+void USTUMenuWidget::OnStartGame()
+{
+    PlayAnimation(HideAnimation);
 }
 
 void USTUMenuWidget::OnQuitGame()
